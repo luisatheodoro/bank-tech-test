@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'Print Statement' do
   scenario 'Printing account statement'
   it 'will print all account transactions' do
@@ -5,5 +7,4 @@ feature 'Print Statement' do
     my_account.deposit_money(20)
     expect { my_account.print_statement }.not_to raise_error
   end
-
 end
