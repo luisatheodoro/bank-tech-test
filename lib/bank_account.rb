@@ -28,7 +28,7 @@ class BankAccount
   end
 
   def insufficient_funds?(balance, amount)
-    fail "You don't have sufficient balance to withdraw. Your account balance is £#{balance}" if balance < amount
+    raise "You don't have sufficient balance to withdraw. Your account balance is £#{balance}" if balance < amount
   end
 
 end
