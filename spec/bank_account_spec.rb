@@ -23,6 +23,11 @@ describe BankAccount do
       luisa_account.deposit_money(22, date)
       expect { luisa_account.withdraw_money(30, date) }.to raise_error "You don't have sufficient balance to withdraw."\
                                                                    " Your account balance is £#{luisa_account.balance}"
+      end
+
+    it 'should throw an error if trying to withdraw more than £100 per transaction' do
+      luisa_account.deposit_money(200, date)
+      expect { luisa_account.withdraw_money(101, date) }.to raise_error 'You can only withdraw £100 pounds per transaction'
     end
   end
 end

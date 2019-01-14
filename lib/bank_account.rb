@@ -1,7 +1,7 @@
 require 'date'
 
 class BankAccount
-
+  MAX_WITHDRAWAL = 100
   attr_reader :account_transactions, :balance
 
   def initialize(client_name)
@@ -20,6 +20,7 @@ class BankAccount
 
   def withdraw_money(amount, date = Date.new)
     insufficient_funds?(@balance, amount)
+    exceed_max_withdrawal?(amount)
     @balance -= amount
     @withdrawal_time = date.formatted_current_date
     withdrawal_transaction = [@withdrawal_time, 'debit', amount, @balance]
@@ -29,6 +30,10 @@ class BankAccount
 
   def insufficient_funds?(balance, amount)
     raise "You don't have sufficient balance to withdraw. Your account balance is £#{balance}" if balance < amount
+  end
+
+  def exceed_max_withdrawal?(amount)
+    raise 'You can only withdraw £100 pounds per transaction' if amount > MAX_WITHDRAWAL
   end
 
 end
