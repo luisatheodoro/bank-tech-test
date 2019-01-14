@@ -19,5 +19,10 @@ describe BankAccount do
       expect(luisa_account.withdraw_money(20, date)).to eq 'You withdraw £20 on 10/01/2019.'\
                                                      ' Your account balance is £0'
     end
+    it 'should throw an error if trying to withdraw more than balance' do
+      luisa_account.deposit_money(22, date)
+      expect { luisa_account.withdraw_money(30, date) }.to raise_error "You don't have sufficient balance to withdraw."\
+                                                                   " Your account balance is £#{luisa_account.balance}"
+    end
   end
 end
