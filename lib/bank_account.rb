@@ -2,7 +2,7 @@ require 'date'
 
 class BankAccount
 
-  attr_reader :account_transactions
+  attr_reader :account_transactions, :balance
 
   def initialize(client_name)
     @client_name = client_name
@@ -19,11 +19,18 @@ class BankAccount
   end
 
   def withdraw_money(amount, date = Date.new)
+    insufficient_funds?(@balance, amount)
     @balance -= amount
     @withdrawal_time = date.formatted_current_date
     withdrawal_transaction = [@withdrawal_time, 'debit', amount, @balance]
     @account_transactions << withdrawal_transaction
     "You withdraw £#{amount} on #{@withdrawal_time}. Your account balance is £#{@balance}"
+  end
+
+  def insufficient_funds?(balance, amount)
+    if balance < amount
+      fail "You don't have sufficient balance to withdraw. Your account balance is £#{balance}"
+    end
   end
 
 end
