@@ -7,6 +7,7 @@ class BankAccount
 
   def deposit_money(amount)
     @balance += amount
-    "You deposited £#{amount} your account balance is £#{@balance}"
+    @deposit_time = (Time.now + 1800).strftime("%d/%m/%Y")
+    "You deposited £#{amount} on #{@deposit_time}. Your account balance is £#{@balance}"
   end
 end
