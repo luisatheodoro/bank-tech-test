@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require 'date'
 
 class BankAccount
 
@@ -10,17 +10,17 @@ class BankAccount
     @account_transactions = []
   end
 
-  def deposit_money(amount)
+  def deposit_money(amount, date = Date.new)
     @balance += amount
-    @deposit_time = (Time.now + 1800).strftime('%d/%m/%Y')
+    @deposit_time = date.formatted_current_date
     deposit_transaction = [@deposit_time, 'credit', amount, @balance]
     @account_transactions << deposit_transaction
     "You deposited £#{amount} on #{@deposit_time}. Your account balance is £#{@balance}"
   end
 
-  def withdraw_money(amount)
+  def withdraw_money(amount, date = Date.new)
     @balance -= amount
-    @withdrawal_time = (Time.now + 1800).strftime('%d/%m/%Y')
+    @withdrawal_time = date.formatted_current_date
     withdrawal_transaction = [@withdrawal_time, 'debit', amount, @balance]
     @account_transactions << withdrawal_transaction
     "You withdraw £#{amount} on #{@withdrawal_time}. Your account balance is £#{@balance}"
