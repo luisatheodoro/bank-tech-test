@@ -5,10 +5,12 @@ After you create your account you can deposit, withdraw and print statement of y
 ## My approach 
 With this project I followed a strict TDD approach, writing a feature and unit test first and seeing it fail, with 
 each error message I would fix it until I had a passing test.
+Tried to follow responsibility principle and each class and method only knows what they need to.
 
 ## My Structure
-Bank Account - Responsible for managing everything related to a bank account like balance, transactions and name.
-Date - Responsible for formatting date.
+Bank Account - Responsible for managing everything related to a bank account like balance, transactions history and name.
+Transaction - Responsible to creating individual transaction to be stored in the bank account transactions.
+Date - Responsible for formatting date method.
 Statement - Responsible for formatting and printing the statement.
 
 ## Cloning the project to your computer
@@ -50,12 +52,10 @@ luisa_account = BankAccount.new('Luisa')
 
 to deposit money:
 require './lib/date'
-date = Date.new
-date = date.formatted_current_date
-luisa_account.deposit_money(50)
+luisa_account.deposit_money(50.00)
 
 to withdraw money:
-luisa_account.withdraw_money(10)
+luisa_account.withdraw_money(10.00)
 
 to check balance:
 luisa_account.balance
@@ -69,28 +69,27 @@ statement.print_statement(luisa_account)
 ```
 2.5.0 :001 > require './lib/bank_account'
  => true 
-2.5.0 :002 > luisa_account = BankAccount.new('Luisa')
- => #<BankAccount:0x00007fdeac14e410 @client_name="Luisa", @balance=0, @account_transactions=[]> 
-2.5.0 :003 > require './lib/date'
+2.5.0 :002 > require './lib/date'
  => true 
-2.5.0 :004 > date = Date.new
- => #<Date: -4712-01-01 ((0j,0s,0n),+0s,2299161j)> 
-2.5.0 :005 > date = date.formatted_current_date
- => "14/01/2019" 
-2.5.0 :006 > luisa_account.deposit_money(50)
- => "You deposited £50 on 14/01/2019. Your account balance is £50" 
-2.5.0 :007 > luisa_account.withdraw_money(10)
- => "You withdraw £10 on 14/01/2019. Your account balance is £40" 
-2.5.0 :008 > luisa_account.balance
- => 40 
-2.5.0 :009 > require './lib/statement'
+2.5.0 :003 > require './lib/statement'
  => true 
-2.5.0 :010 > statement = Statement.new
- => #<Statement:0x00007fdeac16fb10> 
-2.5.0 :011 > statement.print_statement(luisa_account)
+2.5.0 :004 > account = BankAccount.new('Luisa')
+ => #<BankAccount:0x00007ff10a1b2030 @client_name="Luisa", @balance=0, @account_transactions=[]> 
+2.5.0 :005 >  account.deposit_money(24.00)
+ => "You deposited £24.0 on 15/01/2019. Your account balance is £24.0" 
+2.5.0 :006 >  account.deposit_money(25.00)
+ => "You deposited £25.0 on 15/01/2019. Your account balance is £49.0" 
+2.5.0 :007 >  account.deposit_money(26.00)
+ => "You deposited £26.0 on 15/01/2019. Your account balance is £75.0" 
+2.5.0 :008 > 
+2.5.0 :009 > statement = Statement.new
+ => #<Statement:0x00007ff10a1bec40> 
+2.5.0 :010 > statement.print_statement(account)
 Date || Credit || Debit || Balance
-14/01/2019 ||  || 10 || 40
-14/01/2019 || 50 ||  || 50
+15/01/2019 || 26.0 ||  || 75.0
+15/01/2019 || 25.0 ||  || 49.0
+15/01/2019 || 24.0 ||  || 24.0
+
 ```
 
 
