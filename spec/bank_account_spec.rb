@@ -18,7 +18,7 @@ describe BankAccount do
   end
 
   describe '#withdraw money' do
-    it 'should send a confirmation of withdrawal amount, date and account balance' do
+    it 'returns a confirmation of the amount, date and account balance' do
       luisa_account.deposit_money(20, Time.now)
       expect(luisa_account.withdraw_money(20, Time.now)).to eq \
         "You withdraw £20 on #{date.format_date}. Your account balance is £0"
@@ -30,7 +30,7 @@ describe BankAccount do
          " is £#{luisa_account.balance}"
     end
 
-    it 'should throw an error if trying to withdraw more than £100 per transaction' do
+    it 'throw an error if trying to withdraw more than £100 per transaction' do
       luisa_account.deposit_money(200, Time.now)
       expect { luisa_account.withdraw_money(101, Time.now) }.to raise_error \
         'You can only withdraw £100 pounds per transaction'
