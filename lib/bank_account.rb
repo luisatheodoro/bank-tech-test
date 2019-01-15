@@ -1,4 +1,5 @@
 require 'date'
+require_relative 'transaction'
 
 class BankAccount
   MAX_WITHDRAWAL = 100
@@ -13,7 +14,7 @@ class BankAccount
   def deposit_money(deposit_amount, date = Date.new)
     @balance += deposit_amount
     @deposit_time = date.formatted_current_date
-    deposit_transaction = [@deposit_time, deposit_amount, '', @balance]
+    deposit_transaction = Transaction.new(date, deposit_amount, '', @balance)
     @account_transactions << deposit_transaction
     "You deposited £#{deposit_amount} on #{@deposit_time}. Your account balance is £#{@balance}"
   end
@@ -23,7 +24,7 @@ class BankAccount
     exceed_max_withdrawal?(withdrawal_amount)
     @balance -= withdrawal_amount
     @withdrawal_time = date.formatted_current_date
-    withdrawal_transaction = [@withdrawal_time, '', withdrawal_amount, @balance]
+    withdrawal_transaction = Transaction.new(date, '', withdrawal_amount, @balance)
     @account_transactions << withdrawal_transaction
     "You withdraw £#{withdrawal_amount} on #{@withdrawal_time}. Your account balance is £#{@balance}"
   end
