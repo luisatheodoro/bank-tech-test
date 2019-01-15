@@ -11,22 +11,18 @@ class BankAccount
     @account_transactions = []
   end
 
-  def deposit_money(deposit_amount, date = Date.new)
-    @balance += deposit_amount
-    @deposit_time = date.formatted_current_date
-    deposit_transaction = Transaction.new(date, deposit_amount, '', @balance)
-    @account_transactions << deposit_transaction
-    "You deposited £#{deposit_amount} on #{@deposit_time}. Your account balance is £#{@balance}"
+  def deposit_money(amount, time_now = Time.now)
+    @balance += amount
+    @account_transactions << Transaction.new(time_now, amount, '', @balance)
+    "You deposited £#{amount} on #{Date.new.format_date(time_now)}. Your account balance is £#{@balance}"
   end
 
-  def withdraw_money(withdrawal_amount, date = Date.new)
-    insufficient_funds?(@balance, withdrawal_amount)
-    exceed_max_withdrawal?(withdrawal_amount)
-    @balance -= withdrawal_amount
-    @withdrawal_time = date.formatted_current_date
-    withdrawal_transaction = Transaction.new(date, '', withdrawal_amount, @balance)
-    @account_transactions << withdrawal_transaction
-    "You withdraw £#{withdrawal_amount} on #{@withdrawal_time}. Your account balance is £#{@balance}"
+  def withdraw_money(amount, time_now = Time.now)
+    insufficient_funds?(@balance, amount)
+    exceed_max_withdrawal?(amount)
+    @balance -= amount
+    @account_transactions << Transaction.new(time_now, '', amount, @balance)
+    "You withdraw £#{amount} on #{Date.new.format_date(time_now)}. Your account balance is £#{@balance}"
   end
 
   def insufficient_funds?(balance, amount)
