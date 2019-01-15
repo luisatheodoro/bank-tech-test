@@ -1,7 +1,8 @@
+# frozen_string_literal: true.
+
 require 'date'
 
 class Statement
-
   def print_statement(bank_account)
     puts 'Date || Credit || Debit || Balance'
     bank_account.account_transactions.reverse_each do |transaction|

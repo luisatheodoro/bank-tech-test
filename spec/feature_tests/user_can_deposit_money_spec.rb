@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 feature 'Deposit money' do
   it 'will deposit the money in the bank account' do
     my_account = BankAccount.new('Luisa')

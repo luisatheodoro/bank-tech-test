@@ -1,3 +1,5 @@
+# frozen_string_literal: true.
+
 require 'date'
 require_relative 'transaction'
 
@@ -32,5 +34,4 @@ class BankAccount
   def exceed_max_withdrawal?(amount)
     raise 'You can only withdraw £100 pounds per transaction' if amount > MAX_WITHDRAWAL
   end
-
 end
