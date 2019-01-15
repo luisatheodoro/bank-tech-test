@@ -2,6 +2,23 @@
 This app will let you create a bank account.
 After you create your account you can deposit, withdraw and print statement of your transactions.
 
+## My approach 
+With this project I followed a strict TDD approach, writing a feature and unit test first and seeing it fail, with 
+each error message I would fix it until I had a passing test.
+
+## My Structure
+Bank Account - Responsible for managing everything related to a bank account like balance, transactions and name.
+Date - Responsible for formatting date.
+Statement - Responsible for formatting and printing the statement.
+
+## Cloning the project to your computer
+In the terminal:
+ `git clone https://github.com/luisatheodoro/bank-tech-test.git`
+ `cd bank-tech-test`
+
+##Installing dependencies
+`bundle install`
+
 ## Running tests
 In the terminal write `rspec`
 
@@ -75,5 +92,6 @@ Date || Credit || Debit || Balance
 14/01/2019 ||  || 10 || 40
 14/01/2019 || 50 ||  || 50
 ```
+
 
 
