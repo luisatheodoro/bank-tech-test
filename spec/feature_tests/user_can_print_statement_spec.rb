@@ -1,10 +1,9 @@
-# frozen_string_literal: true
-
 feature 'Print Statement' do
   it 'will print all account transactions' do
-    luisa_account = BankAccount.new('Luisa')
-    luisa_account.deposit_money(20)
+    account = BankAccount.new
+    account.deposit_money(20.00)
     statement = Statement.new
-    expect { statement.print_statement(luisa_account) }.not_to raise_error
+    expect { statement.print_statement(account) }.to output("date || credit || debit || balance\n"\
+        "16/01/2019 || 20.00 ||  || 20.00\n").to_stdout
   end
 end
