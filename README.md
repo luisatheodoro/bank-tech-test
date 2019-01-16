@@ -24,6 +24,9 @@ In the terminal:
 ## Running tests
 In the terminal write `rspec`
 
+## Running linted
+In the terminal write `rubocop`
+
 ## Test Coverage
 
 COVERAGE: 100.00% -- 86/86 lines in 10 files

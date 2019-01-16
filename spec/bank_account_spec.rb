@@ -1,39 +1,57 @@
-# frozen_string_literal: true
-
 require 'bank_account'
 
 describe BankAccount do
   before do
-    @time = Time.now
-    Time.stub(:now) { @time }
+    @time = Time.now.strftime('%d/%m/%Y')
+    allow(Time).to receive(:now).and_return(@time)
   end
-  let(:luisa_account) { described_class.new('Luisa') }
-  let(:date) { double :date, format_date: Time.now.strftime('%d/%m/%Y') }
+
+  let(:transaction) { instance_double('Transaction', date: Time.now, credit: 20.00, debit: nil, balance: 20.00) }
+  let(:account) { described_class.new }
+
+
 
   describe '#deposit_money' do
-    it 'should send a confirmation of deposit amount, date and account balance' do
-      expect(luisa_account.deposit_money(20, Time.now)).to eq \
-        "You deposited £20 on #{date.format_date}. Your account balance is £20"\
+    it 'cannot deposit negative amount' do
+      expect { account.deposit_money(-20.00) }.to raise_error \
+        'You can\'t deposit negative number or 0'
+    end
+
+    it 'will raise an error if typing characters' do
+      expect { account.deposit_money('@£kk') }.to raise_error \
+        'You can\'t input other value than number'
+    end
+
+    it 'stores the transaction inside the log' do
+      expect(account.deposit_money(30.00)).to eq account.account_transactions
+    end
+  end
+
+  describe '#balance' do
+    it 'should add the amount deposited to the balance' do
+      account.deposit_money(20.00)
+      expect(account.balance).to eq 20.00
+    end
+
+    it 'should subtract the amount withdrawn to the balance' do
+      account.deposit_money(30.00)
+      account.withdraw_money(20.00)
+      expect(account.balance).to eq 10.00
     end
   end
 
   describe '#withdraw money' do
-    it 'returns a confirmation of the amount, date and account balance' do
-      luisa_account.deposit_money(20, Time.now)
-      expect(luisa_account.withdraw_money(20, Time.now)).to eq \
-        "You withdraw £20 on #{date.format_date}. Your account balance is £0"
-    end
-    it 'should throw an error if trying to withdraw more than balance' do
-      luisa_account.deposit_money(22, Time.now)
-      expect { luisa_account.withdraw_money(30, Time.now) }.to raise_error \
-        'You don\'t have sufficient balance to withdraw. Your account balance'\
-         " is £#{luisa_account.balance}"
+    it 'cannot withdraw negative amount' do
+      expect { account.withdraw_money(-20) }.to raise_error 'You can\'t deposit negative number or 0'
     end
 
-    it 'throw an error if trying to withdraw more than £100 per transaction' do
-      luisa_account.deposit_money(200, Time.now)
-      expect { luisa_account.withdraw_money(101, Time.now) }.to raise_error \
-        'You can only withdraw £100 pounds per transaction'
+    it 'will raise an error if typing characters' do
+      expect { account.withdraw_money('@£kk') }.to raise_error 'You can\'t input other value than number'
+    end
+
+    it 'stores the transaction inside the log' do
+      account.deposit_money(30.00)
+      expect(account.withdraw_money(20)).to eq account.account_transactions
     end
   end
 end
