@@ -1,11 +1,13 @@
 require 'bank_account'
+require 'transactions'
 
 describe BankAccount do
   before do
     @time = Time.now.strftime('%d/%m/%Y')
     allow(Time).to receive(:now).and_return(@time)
   end
-  let(:account) { described_class.new }
+
+  let(:account) { described_class.new() }
 
   describe '#deposit_money' do
     it 'cannot deposit negative amount' do
@@ -19,7 +21,9 @@ describe BankAccount do
     end
 
     it 'stores the transaction inside the log' do
-      expect(account.deposit_money(30.00)).to eq account.account_transactions
+      account.deposit_money(30.00)
+      account_transactions = account.transactions
+      expect(account_transactions.transactions_log).to eq [{ balance: '30.00', credit: '30.00', date: "#{@time}", debit: nil }]
     end
   end
 
@@ -47,7 +51,10 @@ describe BankAccount do
 
     it 'stores the transaction inside the log' do
       account.deposit_money(30.00)
-      expect(account.withdraw_money(20)).to eq account.account_transactions
+      account.withdraw_money(20)
+      account_transactions = account.transactions
+      expect(account_transactions.transactions_log).to eq [{ balance: "30.00", credit: "30.00", date: "#{@time}", debit: nil },\
+                                                          { balance: "10.00", credit: nil, date: "#{@time}", debit: "20.00" }]
     end
   end
 end
