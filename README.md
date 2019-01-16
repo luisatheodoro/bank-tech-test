@@ -8,9 +8,8 @@ each error message I would fix it until I had a passing test.
 Tried to follow responsibility principle and each class and method only knows what they need to.
 
 ## My Structure
-Bank Account - Responsible for managing everything related to a bank account like balance, transactions history and name.
-Transaction - Responsible to creating individual transaction to be stored in the bank account transactions.
-Date - Responsible for formatting date method.
+Bank Account - Responsible for managing everything related to a bank account, I believe balance and the transaction logs should be together inside the bank account.
+Transaction - Responsible to creating individual transaction to be stored in the bank account transactions log.
 Statement - Responsible for formatting and printing the statement.
 
 ## Cloning the project to your computer
@@ -24,12 +23,12 @@ In the terminal:
 ## Running tests
 In the terminal write `rspec`
 
-## Running linted
+## Running linting
 In the terminal write `rubocop`
 
 ## Test Coverage
 
-COVERAGE: 100.00% -- 86/86 lines in 10 files
+COVERAGE: 100.00% -- 111/111 lines in 8 files
 
 ## Acceptance criteria
 ```
@@ -51,47 +50,45 @@ In the terminal write `irb`
 ```
 to create a bank account:
 require './lib/bank_account'
-luisa_account = BankAccount.new('Luisa')
+account = BankAccount.new()
 
 to deposit money:
-require './lib/date'
-luisa_account.deposit_money(50.00)
+account.deposit_money(50.00)
 
 to withdraw money:
-luisa_account.withdraw_money(10.00)
+account.withdraw_money(10.00)
 
 to check balance:
-luisa_account.balance
+account.balance
 
 to see printed statement:
 require './lib/statement'
 statement = Statement.new
-statement.print_statement(luisa_account)
+statement.print_statement(account)
 ```
 ## IRB example
 ```
 2.5.0 :001 > require './lib/bank_account'
  => true 
-2.5.0 :002 > require './lib/date'
+2.5.0 :002 > require './lib/statement'
  => true 
-2.5.0 :003 > require './lib/statement'
- => true 
-2.5.0 :004 > account = BankAccount.new('Luisa')
- => #<BankAccount:0x00007ff10a1b2030 @client_name="Luisa", @balance=0, @account_transactions=[]> 
-2.5.0 :005 >  account.deposit_money(24.00)
- => "You deposited £24.0 on 15/01/2019. Your account balance is £24.0" 
-2.5.0 :006 >  account.deposit_money(25.00)
- => "You deposited £25.0 on 15/01/2019. Your account balance is £49.0" 
-2.5.0 :007 >  account.deposit_money(26.00)
- => "You deposited £26.0 on 15/01/2019. Your account balance is £75.0" 
-2.5.0 :008 > 
-2.5.0 :009 > statement = Statement.new
- => #<Statement:0x00007ff10a1bec40> 
-2.5.0 :010 > statement.print_statement(account)
-Date || Credit || Debit || Balance
-15/01/2019 || 26.0 ||  || 75.0
-15/01/2019 || 25.0 ||  || 49.0
-15/01/2019 || 24.0 ||  || 24.0
+2.5.0 :003 > account = BankAccount.new()
+ => #<BankAccount:0x00007fa65c0fc648 @balance=0, @account_transactions=[]> 
+2.5.0 :004 >  account.deposit_money(24.00)
+ => [#<Transaction:0x00007fa65c105540 @date=2019-01-16 11:03:02 +0000, @credit="24.00", @debit=nil, @balance="24.00">] 
+2.5.0 :005 >  account.deposit_money(25.00)
+ => [#<Transaction:0x00007fa65c105540 @date=2019-01-16 11:03:02 +0000, @credit="24.00", @debit=nil, @balance="24.00">, #<Transaction:0x00007fa65c10e5a0 @date=2019-01-16 11:03:02 +0000, @credit="25.00", @debit=nil, @balance="49.00">] 
+2.5.0 :006 >  account.deposit_money(26.00)
+ => [#<Transaction:0x00007fa65c105540 @date=2019-01-16 11:03:02 +0000, @credit="24.00", @debit=nil, @balance="24.00">, #<Transaction:0x00007fa65c10e5a0 @date=2019-01-16 11:03:02 +0000, @credit="25.00", @debit=nil, @balance="49.00">, #<Transaction:0x00007fa65b99f328 @date=2019-01-16 11:03:02 +0000, @credit="26.00", @debit=nil, @balance="75.00">] 
+2.5.0 :007 > 
+2.5.0 :008 > statement = Statement.new
+ => #<Statement:0x00007fa65b9a6dd0> 
+2.5.0 :009 > statement.print_statement(account)
+date || credit || debit || balance
+16/01/2019 || 26.00 ||  || 75.00
+16/01/2019 || 25.00 ||  || 49.00
+16/01/2019 || 24.00 ||  || 24.00
+
 
 ```
 
