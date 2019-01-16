@@ -8,7 +8,7 @@ describe BankAccount do
   end
   let(:transaction_1) do
     double(Transactions, transactions_log: [{ balance: '30.00', credit: format('%.2f', '30.00'), date: @time, debit: nil }])
-    end
+  end
   let(:transaction_2) do
     double(Transactions, transactions_log: [{ balance: '30.00', credit: format('%.2f', '30.00'), date: @time, debit: nil },
                                             { balance: '10.00', debit: format('%.2f', '20.00'), date: @time, credit: nil }])
