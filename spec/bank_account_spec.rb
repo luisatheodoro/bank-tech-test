@@ -5,11 +5,7 @@ describe BankAccount do
     @time = Time.now.strftime('%d/%m/%Y')
     allow(Time).to receive(:now).and_return(@time)
   end
-
-  let(:transaction) { instance_double('Transaction', date: Time.now, credit: 20.00, debit: nil, balance: 20.00) }
   let(:account) { described_class.new }
-
-
 
   describe '#deposit_money' do
     it 'cannot deposit negative amount' do
