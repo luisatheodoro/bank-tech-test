@@ -5,7 +5,7 @@ feature 'Deposit money' do
   end
   subject(:account) { BankAccount.new }
 
-  scenario 'After user deposit, the transaction will be stores inside transactions' do
+  scenario 'After user deposit, the transaction will be stored inside transactions' do
     expect(account.deposit_money(20)).to eq [{ date: "#{@time}", credit: "20.00", debit: nil, balance: "20.00" }]
   end
   scenario 'User can\'t deposit amount equal zero' do
