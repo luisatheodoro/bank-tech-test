@@ -9,7 +9,7 @@ Tried to follow responsibility principle and each class and method only knows wh
 
 ## My Structure
 Bank Account - Responsible for managing everything related to a bank account, I believe balance and the transaction logs should be together inside the bank account.
-Transaction - Responsible to creating individual transaction to be stored in the bank account transactions log.
+Transactions - Responsible to saving to transactions logs
 Statement - Responsible for formatting and printing the statement.
 
 ## Cloning the project to your computer
