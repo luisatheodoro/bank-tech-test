@@ -17,7 +17,7 @@ describe Statement do
   describe '#print_statement' do
     it 'return statement transactions with date, type, amount and balance' do
       expect { statement.print_statement(bank_account) }.to output("date || credit || debit || balance\n"\
-        "16/01/2019 || 30.00 ||  || 30.00\n").to_stdout
+        "#{@time.strftime('%d/%m/%Y')} || 30.00 ||  || 30.00\n").to_stdout
     end
   end
 end
